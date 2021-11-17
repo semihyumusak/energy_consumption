@@ -24,7 +24,6 @@ from datetime import timedelta
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
-
 import warnings
 import numpy as np
 from datetime import date
@@ -210,6 +209,7 @@ for s in [[7], [8], [1, 2, 3, 4, 5, 6, 7, 8]]:
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
 
+
         y_inv = scalarY.inverse_transform(y_test)
         y_pred_inv = scalarY.inverse_transform(y_pred.reshape(-1, 1))
         rms = mean_squared_error(y_test, y_pred, squared=False)
@@ -217,6 +217,10 @@ for s in [[7], [8], [1, 2, 3, 4, 5, 6, 7, 8]]:
 
         d_train = d[~d["date"].str.contains("2020")]
         d_test = d[d["date"].str.contains("2020")]
+
+        fig, ax = plt.subplots()
+        ax.plot(d_test.date, y_inv)
+        ax.plot(d_test.date, y_pred_inv)
         # print(y_pred_inv.shape)
         # print(d_test.shape)
         folder = "./results/"
